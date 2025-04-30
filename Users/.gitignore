@@ -1,0 +1,4 @@
+node_modules/
+images/
+.prettierrc
+*.env
