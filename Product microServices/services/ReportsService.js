@@ -8,10 +8,7 @@ exports.findReports = (group, battalion) => {
 };
 
 exports.findLastReports = (query) => {
-  return Reports.findOne({
-    group: query.group,
-    battalion: query.battalion,
-  });
+  return Reports.findOne().sort({ createdAt: -1 }).exec();
   // .sort({ createdAt: -1 })
   // .exec();
   // .sort({ _id: -1 })

@@ -7,9 +7,8 @@ const {
 } = require('../services/ReportsService');
 
 exports.getLastReports = catchAsync(async (req, res, next) => {
-  console.log(req.query);
   const data = await findLastReports(req.query);
-  console.log(data);
+  // console.log(data);
   if (!data) {
     next(new AppError('This Data is undefined. Please login again', 400));
   }
