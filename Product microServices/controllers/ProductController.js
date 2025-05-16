@@ -74,14 +74,14 @@ exports.getProductByNameGroup = catchAsync(async (req, res, next) => {
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   try {
-    const product = await createProduct(req.body); // כאן בלי בדיקה ידנית
+    const product = await createProduct(req.body);
     res.status(201).json({
       status: 'success',
       product,
     });
   } catch (error) {
     if (error.code === 11000) {
-      return next(new AppError('מכשיר זה כבר נמצא במערכת', 409)); // 409 = Conflict
+      return next(new AppError('מכשיר זה כבר נמצא במערכת', 409));
     }
     next(error);
   }
