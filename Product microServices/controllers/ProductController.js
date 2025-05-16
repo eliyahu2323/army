@@ -42,7 +42,7 @@ exports.updateLocationProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.updateGroup = catchAsync(async (req, res, next) => {
-  console.log(req.query, req.body);
+  // console.log(req.query, req.body);
   const group = await findProductByIdAndUpdateGroup(req.query, req.body);
   res.status(200).json({
     status: 'success',
@@ -51,7 +51,7 @@ exports.updateGroup = catchAsync(async (req, res, next) => {
 });
 
 exports.getProductById = catchAsync(async (req, res, next) => {
-  const product = await findProduct(req.body);
+  const product = await findProduct(req.query);
   if (!product) {
     next(new AppError('This Data is undefined.', 400));
   }
@@ -88,8 +88,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteProduct = catchAsync(async (req, res, next) => {
-  console.log(req.body);
-  const product = await findProductAndDelete(req.body);
+  const product = await findProductAndDelete(req.query);
   if (!product) {
     next(new AppError('This Data is undefined.', 400));
   } else {
