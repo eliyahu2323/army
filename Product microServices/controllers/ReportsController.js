@@ -7,6 +7,7 @@ const {
 } = require('../services/ReportsService');
 
 exports.getLastReports = catchAsync(async (req, res, next) => {
+  console.log(req.query);
   const data = await findLastReports(req.query);
   // console.log(data);
   if (!data) {

@@ -8,11 +8,7 @@ exports.findReports = (group, battalion) => {
 };
 
 exports.findLastReports = (query) => {
-  return Reports.findOne().sort({ createdAt: -1 }).exec();
-  // .sort({ createdAt: -1 })
-  // .exec();
-  // .sort({ _id: -1 })
-  // .limit(1);
+  return Reports.findOne(query).sort({ createdAt: -1 }).exec();
 };
 exports.createReports = (query, number_Report) => {
   return Reports.create({
