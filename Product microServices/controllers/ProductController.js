@@ -81,8 +81,13 @@ exports.createProduct = catchAsync(async (req, res, next) => {
     });
   } catch (error) {
     if (error.code === 11000) {
-      return next(new AppError('מכשיר זה כבר נמצא במערכת', 409));
+      return res.status(409).json({
+        status: 'fail',
+        message: 'מכשיר זה כבר נמצא במערכת',
+        error: error,
+      });
     }
+
     next(error);
   }
 });
