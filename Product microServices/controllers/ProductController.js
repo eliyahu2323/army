@@ -51,7 +51,7 @@ exports.updateGroup = catchAsync(async (req, res, next) => {
 });
 
 exports.getProductById = catchAsync(async (req, res, next) => {
-  const product = await findProduct(req.query);
+  const product = await findProduct(req.body);
   if (!product) {
     next(new AppError('This Data is undefined.', 400));
   }
@@ -73,26 +73,29 @@ exports.getProductByNameGroup = catchAsync(async (req, res, next) => {
 });
 
 exports.createProduct = catchAsync(async (req, res, next) => {
-  const product = await createProduct(req.body);
-  console.log(product);
+  try {
+    const product = await createProduct(req.body); // כאן בלי בדיקה ידנית
+    res.status(201).json({
+      status: 'success',
+      product,
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return next(new AppError('מכשיר זה כבר נמצא במערכת', 409)); // 409 = Conflict
+    }
+    next(error);
+  }
+});
+
+exports.deleteProduct = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  const product = await findProductAndDelete(req.body);
   if (!product) {
-    next(new AppError('מכשיר זה כבר נמצא במערכת', 400));
+    next(new AppError('This Data is undefined.', 400));
   } else {
     res.status(200).json({
       status: 'success',
       product,
     });
   }
-});
-
-exports.deleteProduct = catchAsync(async (req, res, next) => {
-  console.log(req.query);
-  const product = await findProductAndDelete(req.query);
-  if (!product) {
-    next(new AppError('This Data is undefined.', 400));
-  }
-  res.status(200).json({
-    status: 'success',
-    product,
-  });
 });
