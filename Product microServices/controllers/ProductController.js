@@ -74,14 +74,15 @@ exports.getProductByNameGroup = catchAsync(async (req, res, next) => {
 
 exports.createProduct = catchAsync(async (req, res, next) => {
   const product = await createProduct(req.body);
+  console.log(product);
   if (!product) {
-    next(new AppError('This Data is undefined.', 400));
+    next(new AppError('מכשיר זה כבר נמצא במערכת', 400));
+  } else {
+    res.status(200).json({
+      status: 'success',
+      product,
+    });
   }
-
-  res.status(200).json({
-    status: 'success',
-    product,
-  });
 });
 
 exports.deleteProduct = catchAsync(async (req, res, next) => {

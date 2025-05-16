@@ -5,6 +5,7 @@ exports.findAllProducts = () => {
 };
 
 exports.findProduct = (query) => {
+  // console.log(query);
   return Product.find(query);
 };
 
@@ -26,6 +27,14 @@ exports.findProductAndDelete = async (id) => {
   return Product.findByIdAndDelete(product);
 };
 
-exports.createProduct = (query) => {
-  return Product.create(query);
+exports.createProduct = async (query) => {
+  // console.log(query.id_product);
+  let prod = await Product.find({ id_product: query.id_product });
+  console.log(prod);
+  if (prod[0]) {
+    return;
+  } else {
+    return Product.create(query);
+  }
+  // return Product.create(query);
 };
